@@ -325,8 +325,26 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brackets = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '<': '>',
+    "'": "'",
+  };
+  const stack = [];
+  str.split('').forEach((el) => {
+    if (brackets[el]) {
+      stack.push(el);
+    } else {
+      const last = stack.pop();
+      if (brackets[last] !== el) {
+        stack.push('error');
+      }
+    }
+  });
+  return stack.length === 0;
 }
 
 /**
@@ -421,8 +439,24 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const lines = [
+    // Горизонтали
+    [position[0][0], position[0][1], position[0][2]],
+    [position[1][0], position[1][1], position[1][2]],
+    [position[2][0], position[2][1], position[2][2]],
+    // Вертикали
+    [position[0][0], position[1][0], position[2][0]],
+    [position[0][1], position[1][1], position[2][1]],
+    [position[0][2], position[1][2], position[2][2]],
+    // Диагонали
+    [position[0][0], position[1][1], position[2][2]],
+    [position[0][2], position[1][1], position[2][0]],
+  ];
+
+  return ['X', '0'].find((player) =>
+    lines.some((line) => line.every((cell) => cell === player))
+  );
 }
 
 module.exports = {
